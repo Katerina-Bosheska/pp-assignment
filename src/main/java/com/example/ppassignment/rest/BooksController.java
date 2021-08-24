@@ -4,6 +4,8 @@ import com.example.ppassignment.model.Author;
 import com.example.ppassignment.model.Book;
 import com.example.ppassignment.service.AuthorService;
 import com.example.ppassignment.service.BookService;
+import com.example.ppassignment.service.GraphQLService;
+import graphql.ExecutionResult;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,14 +15,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/rest")
 public class BooksController {
 
     private final AuthorService authorService;
     private final BookService bookService;
 
+    @Autowired
+    private GraphQLService graphQLService;
+
     public BooksController(AuthorService authorService, BookService bookService){
         this.authorService = authorService;
         this.bookService = bookService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Object> getData(@RequestBody String query){
+        ExecutionResult execute = graphQLService.getGraphQl().execute(query);
+
+        return new ResponseEntity<>(execute, HttpStatus.OK);
     }
 
     @GetMapping("/books")

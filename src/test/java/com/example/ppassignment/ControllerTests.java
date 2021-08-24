@@ -70,7 +70,7 @@ public class ControllerTests {
         Mockito.when(bookService.getAllBooks()).thenReturn(booksList);
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/books")
+                .get("/rest/books")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3))
@@ -82,7 +82,7 @@ public class ControllerTests {
         Mockito.when(bookService.getBookById(1)).thenReturn(booksList.get(0));
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/books/1")
+                .get("/rest/books/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(this.objectMapper.writeValueAsString(booksList.get(0))));
@@ -95,7 +95,7 @@ public class ControllerTests {
         Mockito.when(bookService.createBook(Mockito.any(Book.class))).thenReturn(book);
 
         MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
-                .post("/books/create")
+                .post("/rest/books/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(this.objectMapper.writeValueAsString(book));
@@ -112,7 +112,7 @@ public class ControllerTests {
         Mockito.when(bookService.updateBook(Mockito.any(Integer.class),Mockito.any(Book.class))).thenThrow(InvalidRequestException.class);
 
         MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
-                .put("/books/update/1")
+                .put("/rest/books/update/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 

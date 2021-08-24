@@ -1,0 +1,20 @@
+schema {
+    query: Query
+}
+type Query {
+    allBooks: [Book]
+}
+type Author {
+    name: String
+    surname: String
+}
+type Book {
+    id: Int
+    title: String
+    genre: Genre
+    authors: [Author]
+}
+enum Genre {
+   fiction
+    nonfiction
+}
