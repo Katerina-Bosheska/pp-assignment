@@ -3,13 +3,19 @@ schema {
 }
 type Query {
     allBooks: [Book]
+    allAuthors: [Author]
+    book(book_id: Int): Book
+    author(author_id: Int): Author
 }
+scalar Date
 type Author {
+    author_id: Int
     name: String
     surname: String
+    birthdate: Date
 }
 type Book {
-    id: Int
+    book_id: Int
     title: String
     genre: Genre
     authors: [Author]

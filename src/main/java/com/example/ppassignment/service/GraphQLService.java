@@ -1,6 +1,10 @@
 package com.example.ppassignment.service;
 
+import com.example.ppassignment.service.datafetchers.AllAuthorsDataFetcher;
 import com.example.ppassignment.service.datafetchers.AllBooksDataFetcher;
+import com.example.ppassignment.service.datafetchers.SpecificAuthorFetcher;
+import com.example.ppassignment.service.datafetchers.SpecificBookFetcher;
+import graphql.Scalars;
 import graphql.schema.GraphQLSchema;
 import graphql.GraphQL;
 import graphql.schema.idl.RuntimeWiring;
@@ -27,6 +31,14 @@ public class GraphQLService {
 
     @Autowired
     private AllBooksDataFetcher allBooksDataFetcher;
+    @Autowired
+    private AllAuthorsDataFetcher allAuthorsDataFetcher;
+    @Autowired
+    private SpecificAuthorFetcher specificAuthorFetcher;
+    @Autowired
+    private SpecificBookFetcher specificBookFetcher;
+    @Autowired
+    private DateScalarConfiguration dateScalarConfiguration;
 
     @PostConstruct
     private void loadSchema() throws IOException {
@@ -40,7 +52,11 @@ public class GraphQLService {
     private RuntimeWiring buildRuntimeWiring(){
         return RuntimeWiring.newRuntimeWiring()
                 .type("Query", typeWiring -> typeWiring
-                        .dataFetcher("allBooks", allBooksDataFetcher))
+                        .dataFetcher("allBooks", allBooksDataFetcher)
+                        .dataFetcher("allAuthors", allAuthorsDataFetcher)
+                        .dataFetcher("book", specificBookFetcher)
+                        .dataFetcher("author", specificAuthorFetcher))
+                .scalar(dateScalarConfiguration.dateScalar())
                 .build();
     }
 
