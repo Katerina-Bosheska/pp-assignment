@@ -3,7 +3,7 @@
 The application runs on http://localhost:8080.<br/>
 I used H2 database, the necessary configuration for accessing the database can be found in the <i>application.properties</i> file.<br/>
 I have implemented few tests to test the web layer and few of the service methods using Mockito.<br/>
-The GraphQL queries are directed at the http://localhost:8080/rest endpoint while the other endpoints are:<br/>
+The GraphQL queries are directed at the http://localhost:8080/rest endpoint while the other endpoints are exposed on the /rest/books and /rest/authors respectively. I implemented the following request handling methods:<br/>
 <pre>GET /rest/books</pre>
 returns all books from database
 <pre>GET /rest/books/{id}</pre>
